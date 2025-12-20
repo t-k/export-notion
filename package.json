@@ -3,6 +3,10 @@
   "version": "0.1.1",
   "description": "Export Notion pages to PDF with rendered Mermaid diagrams",
   "license": "ISC",
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/t-k/export-notion"
+  },
   "type": "module",
   "bin": {
     "export-notion": "dist/cli.js"
