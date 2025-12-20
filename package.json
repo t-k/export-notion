@@ -1,6 +1,6 @@
 {
   "name": "export-notion",
-  "version": "0.1.1",
+  "version": "0.1.2",
   "description": "Export Notion pages to PDF with rendered Mermaid diagrams",
   "license": "ISC",
   "repository": {
