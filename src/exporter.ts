@@ -1,6 +1,5 @@
 import { mkdir } from "node:fs/promises";
 import { join } from "node:path";
-import { err, ok } from "neverthrow";
 import { renderAllMermaidBlocks, updateMarkdownWithImages } from "./mermaid.js";
 import {
 	blocksToMarkdown,
@@ -10,11 +9,13 @@ import {
 	getPageTitle,
 } from "./notion.js";
 import { markdownToHtml, markdownToPdf, saveMarkdown } from "./pdf.js";
-import type {
-	AppResult,
-	ExportOptions,
-	ExportResult,
-	NotionConfig,
+import {
+	type AppResult,
+	type ExportOptions,
+	type ExportResult,
+	err,
+	type NotionConfig,
+	ok,
 } from "./types.js";
 
 // Sanitize filename
@@ -41,7 +42,7 @@ export async function exportNotionPage(
 	// Get page title
 	if (verbose) console.log("Fetching page title...");
 	const titleResult = await getPageTitle(client, pageId);
-	if (titleResult.isErr()) {
+	if (!titleResult.ok) {
 		return err(titleResult.error);
 	}
 	const pageTitle = titleResult.value;
@@ -50,7 +51,7 @@ export async function exportNotionPage(
 	// Fetch all blocks
 	if (verbose) console.log("Fetching page content...");
 	const blocksResult = await fetchAllBlocks(client, pageId);
-	if (blocksResult.isErr()) {
+	if (!blocksResult.ok) {
 		return err(blocksResult.error);
 	}
 	const blocks = blocksResult.value;

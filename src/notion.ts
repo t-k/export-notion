@@ -3,8 +3,7 @@ import type {
 	BlockObjectResponse,
 	RichTextItemResponse,
 } from "@notionhq/client/build/src/api-endpoints.js";
-import { err, ok } from "neverthrow";
-import type { AppResult, MermaidBlock } from "./types.js";
+import { type AppResult, err, type MermaidBlock, ok } from "./types.js";
 
 // Initialize Notion client
 export function createNotionClient(apiToken: string): Client {
@@ -67,7 +66,7 @@ export async function fetchAllBlocks(
 					// Recursively fetch children if block has children
 					if (block.has_children) {
 						const children = await fetchAllBlocks(client, block.id);
-						if (children.isOk()) {
+						if (children.ok) {
 							blocks.push(...children.value);
 						}
 					}

@@ -127,7 +127,7 @@ program
 			options.verbose,
 		);
 
-		if (result.isOk()) {
+		if (result.ok) {
 			console.log("");
 			console.log("Done!");
 			console.log(`Output: ${result.value.outputPath}`);

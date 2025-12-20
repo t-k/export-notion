@@ -1,5 +1,3 @@
-import type { Result } from "neverthrow";
-
 export type OutputFormat = "pdf" | "md" | "html";
 export type ImageFormat = "svg" | "png";
 export type Theme = "default" | "dark" | "forest" | "neutral";
@@ -41,4 +39,15 @@ export type AppError =
 	| { type: "IO_ERROR"; message: string }
 	| { type: "CONFIG_ERROR"; message: string };
 
+// Simple Result type (replaces neverthrow)
+export type Result<T, E> = { ok: true; value: T } | { ok: false; error: E };
+
 export type AppResult<T> = Result<T, AppError>;
+
+export function ok<T>(value: T): { ok: true; value: T } {
+	return { ok: true, value };
+}
+
+export function err<E>(error: E): { ok: false; error: E } {
+	return { ok: false, error };
+}

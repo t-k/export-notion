@@ -16,11 +16,13 @@ export interface MermaidRenderOptions {
 }
 
 // Get path to local mmdc binary
-function getMmdcPath(): string {
-	// Resolve from node_modules relative to this file
-	const currentDir = dirname(fileURLToPath(import.meta.url));
-	// Go up from dist/ to project root, then into node_modules
-	return join(currentDir, "..", "node_modules", ".bin", "mmdc");
+async function getMmdcPath(): Promise<string> {
+	// Use import.meta.resolve to find the mermaid-cli module
+	const mermaidCliUrl = import.meta.resolve("@mermaid-js/mermaid-cli");
+	const mermaidCliPath = fileURLToPath(mermaidCliUrl);
+	const mermaidCliDir = dirname(mermaidCliPath);
+	// The main export is src/index.js, bin is src/cli.js in the same directory
+	return join(mermaidCliDir, "cli.js");
 }
 
 // Run command and return result
@@ -63,8 +65,10 @@ export async function renderMermaidBlock(
 
 		const bgColor = theme === "dark" ? "#1e1e1e" : "transparent";
 
-		// Run local mmdc binary directly (no shell, no npx)
-		const result = await runCommand(getMmdcPath(), [
+		// Run mmdc via node (cli.js is an ES module)
+		const mmdcPath = await getMmdcPath();
+		const result = await runCommand(process.execPath, [
+			mmdcPath,
 			"-i",
 			tempFile,
 			"-o",
