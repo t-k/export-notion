@@ -1,0 +1,47 @@
+{
+  "name": "export-notion",
+  "version": "0.1.0",
+  "description": "Export Notion pages to PDF with rendered Mermaid diagrams",
+  "license": "ISC",
+  "type": "module",
+  "bin": {
+    "export-notion": "dist/cli.js"
+  },
+  "main": "dist/cli.js",
+  "files": [
+    "dist"
+  ],
+  "scripts": {
+    "build": "tsc",
+    "start": "node dist/cli.js",
+    "test": "vitest run",
+    "test:watch": "vitest",
+    "lint": "biome check src/",
+    "lint:fix": "biome check --write src/",
+    "format": "biome format --write src/",
+    "prepublishOnly": "npm run build"
+  },
+  "keywords": [
+    "notion",
+    "mermaid",
+    "export",
+    "pdf",
+    "markdown"
+  ],
+  "engines": {
+    "node": ">=18"
+  },
+  "devDependencies": {
+    "@biomejs/biome": "^2.3.10",
+    "@types/node": "^22.0.0",
+    "typescript": "^5.7.0",
+    "vitest": "^4.0.16"
+  },
+  "dependencies": {
+    "@mermaid-js/mermaid-cli": "^11.12.0",
+    "@notionhq/client": "^5.6.0",
+    "commander": "^14.0.2",
+    "md-to-pdf": "^5.2.5",
+    "neverthrow": "^8.2.0"
+  }
+}
